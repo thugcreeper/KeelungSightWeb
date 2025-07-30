@@ -1,22 +1,20 @@
 package com.example.demo.service;
 
 import com.example.demo.repository.SightRepository;
-import com.org.model.Sight;
+import com.example.demo.model.Sight;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Optional;
 
 @Service
-public class sightService {
+public class SightService {
 
-    @Autowired
-    private final SightRepository sightRepository;
+    private SightRepository sightRepository;
 
-    public sightService(SightRepository sightRepository) {
+    public SightService(SightRepository sightRepository) {
         this.sightRepository = sightRepository;
     }
 
@@ -32,7 +30,7 @@ public class sightService {
         List<Sight> resultList = sightRepository.findAll(example);
         if(resultList != null){
             for (Sight s : resultList) {
-                System.out.println(s.getZone());
+                System.out.println(s.toString());
             }
         }
         else {

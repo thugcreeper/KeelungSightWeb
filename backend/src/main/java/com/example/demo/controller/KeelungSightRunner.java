@@ -2,7 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.service.deleteSights;
 import com.example.demo.service.findAllSight;
-import com.org.model.Sight;
+import com.example.demo.model.Sight;
 import com.example.demo.repository.SightRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;

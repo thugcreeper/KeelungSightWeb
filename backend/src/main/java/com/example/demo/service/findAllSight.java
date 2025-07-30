@@ -1,7 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.repository.SightRepository;
-import com.org.model.Sight;
+import com.example.demo.model.Sight;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

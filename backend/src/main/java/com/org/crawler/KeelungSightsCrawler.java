@@ -1,6 +1,6 @@
 package com.org.crawler;
 import java.util.*;
-import com.org.model.Sight;
+import com.example.demo.model.Sight;
 import org.jsoup.Jsoup;
 import java.lang.NullPointerException;
 import org.jsoup.nodes.Document;

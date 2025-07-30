@@ -1,8 +1,8 @@
 package com.example.demo.controller;
 
 import com.example.demo.repository.SightRepository;
-import com.example.demo.service.sightService;
-import com.org.model.Sight;
+import com.example.demo.service.SightService;
+import com.example.demo.model.Sight;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,7 +23,7 @@ public class SightController{
     @GetMapping("/SightAPI/")
     public ResponseEntity<Sight[]> getAllSights(){
         Sight errorSight = new Sight();
-        sightService newCrawler =new sightService(sightRepository);
+        SightService newCrawler =new SightService(sightRepository);
         try{
             List<Sight> allSights = new ArrayList<>();
             for (String district : districts) {
@@ -47,7 +47,7 @@ public class SightController{
     //@RequestParam is used to extract data from the query parameters of a request URL
     //?zone="七堵" 會擷取七堵
     public ResponseEntity<Sight[]> getItems(@RequestParam(required = false) String zone) {
-        sightService newCrawler =new sightService(sightRepository);
+        SightService newCrawler =new SightService(sightRepository);
         Sight errorSight = new Sight();
         try{
             Sight[] crawlSights= newCrawler.getSightByZone(zone).toArray(new Sight[0]);
