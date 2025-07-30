@@ -1,6 +1,6 @@
 package com.example.demo.service;
 
-import com.org.model.Sight;
+import com.example.demo.model.Sight;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -12,7 +12,7 @@ import java.util.List;
 public class SightServiceTest {
 
     @Autowired
-    private sightService sightService;
+    private SightService sightService;
 
     @Test
     public void testGetSightsByZone() {
