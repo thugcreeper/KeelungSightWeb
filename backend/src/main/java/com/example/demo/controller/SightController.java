@@ -11,7 +11,7 @@ import java.util.*;
 //run and enter http://127.0.0.1:8080/SightAPI?zone=七堵
 //Web API
 @RestController
-@CrossOrigin("http://localhost:5173/")//設定允許CORS的網站
+@CrossOrigin("https://thugcreeper.github.io/KeelungSightWeb/")//設定允許CORS的網站
 public class SightController{
     private final String[] districts= {"七堵","中山","中正","仁愛","安樂","信義","暖暖"};
     private final SightRepository sightRepository;
