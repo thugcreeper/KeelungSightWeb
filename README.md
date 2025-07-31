@@ -1,12 +1,21 @@
-# React + Vite
+# 基隆市景點瀏覽器 KeelungSightWeb
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+暑假專案練習，前端提供按鈕選取基隆市行政區，並回傳景點。
 
-Currently, two official plugins are available:
+## 前端 (GitHub Pages)
+👉 [基隆市旅遊景點前端網站](https://thugcreeper.github.io/KeelungSightWeb/)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- 使用 React + Vite 建置，Tailwind CSS 美化介面。
+- 以按鈕快速查詢七大行政區的景點。
+- 支援圖片展示、詳細說明與外部地圖連結。
 
-## Expanding the ESLint configuration
+## 後端 WebAPI (Render)
+👉 [WebAPI連結](https://keelungsightweb.onrender.com/SightAPI)
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- 使用 Spring Boot 搭配 MongoDB Atlas 雲端資料庫。
+- 啟動時自動執行爬蟲程式抓取資料。
+- 提供 RESTful API 查詢景點，例如：
+  - `GET /SightAPI?zone=七堵`
+  - `GET /SightAPI/` (回傳所有行政區)
+
+

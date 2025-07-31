@@ -1,3 +1,7 @@
 1.intelij 開啟資料夾"summerProjectWebAPI"
 2.執行 "WebAPITests"
 3.http://127.0.0.1:8080/SightAPI?zone="七堵"
+(這是開發階段時的操作手冊，前端已部署到githubpages，後端webAPI部署到render
+前端:https://thugcreeper.github.io/KeelungSightWeb/
+後端:https://keelungsightweb.onrender.com/SightAPI?zone=<七堵、中正、中山...>
+進入/SightAPI/預設回傳基隆所有行政區的景點
