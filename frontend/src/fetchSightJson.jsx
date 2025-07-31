@@ -1,7 +1,7 @@
 function fetchSightData(district) {
   let hint = document.getElementById('searchingHint'); // Show searching hint
   if(hint) hint.style.display = 'block';
-  return fetch(`https://keelungsightweb.onrender.com/SightAPIzone=${district}`, { method: "GET" })
+  return fetch(`https://keelungsightweb.onrender.com/SightAPI?zone=${district}`, { method: "GET" })
     .then(response => {
       if (!response.ok) throw new Error('Network response was not ok');
       if(hint)hint.style.display = 'none'; // Hide searching hint
