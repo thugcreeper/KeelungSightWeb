@@ -10,7 +10,7 @@
 - 支援圖片展示、詳細說明與外部地圖連結。
 
 ## 後端 WebAPI (Render)
-👉 [WebAPI連結](https://keelungsightweb.onrender.com/SightAPI)
+👉 [WebAPI連結](https://keelungsightweb.onrender.com/SightAPI/)
 
 - 使用 Spring Boot 搭配 MongoDB Atlas 雲端資料庫。
 - 啟動時自動執行爬蟲程式抓取資料。
