@@ -18,5 +18,6 @@ public class KeelungSightsCrawlerTest {
         catch (NullPointerException e){
             System.err.println("No results,please enter a district which exists in Keelung City");
         }
+
     }
 }

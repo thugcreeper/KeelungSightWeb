@@ -9,8 +9,10 @@ import org.jsoup.select.Elements;
 import java.io.IOException;
 
 public class KeelungSightsCrawler{
+    String mainURL = "https://www.travelking.com.tw/tourguide/taiwan/keelungcity/";
+    private Map<String, Sight[]> cache = new HashMap<>();
     public Sight[] getItems(String target) throws NullPointerException,IOException{
-        String mainURL = "https://www.travelking.com.tw/tourguide/taiwan/keelungcity/";
+        if (cache.containsKey(target)) {return cache.get(target);}
         Sight[] siteArray = null;
         boolean found = false;
         try {
@@ -56,19 +58,22 @@ public class KeelungSightsCrawler{
                                 mysight.setPhotoURL(imgURL);
                             }
                             else{
-                                mysight.setPhotoURL("No image URL");
+                                //沒照片連結的範例
+                                mysight.setPhotoURL("https://thumb.ac-illust.com/b1/b170870007dfa419295d949814474ab2_t.jpeg");
                             }
                             //System.out.println(mysight.toString());
                             siteArray[index++]=mysight;
                         }
                     }
-
+                    break;
                 }
             }
             if (!found) {
                 throw new NullPointerException();//沒有搜尋結果的例外
             }
-        } catch (IOException e) {
+            cache.put(target, siteArray);
+        }
+        catch (IOException e) {
             throw new IOException();
         }
         return siteArray;

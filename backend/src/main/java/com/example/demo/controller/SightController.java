@@ -11,7 +11,8 @@ import java.util.*;
 //run and enter http://127.0.0.1:8080/SightAPI?zone=七堵
 //Web API
 @RestController
-@CrossOrigin("https://thugcreeper.github.io")//設定允許CORS的網站
+@CrossOrigin("https://thugcreeper.github.io")//設定允許CORS的網站，部署用
+//@CrossOrigin("http://localhost:5173")//測試用
 public class SightController{
     private final String[] districts= {"七堵","中山","中正","仁愛","安樂","信義","暖暖"};
     private final SightRepository sightRepository;
@@ -56,7 +57,7 @@ public class SightController{
             }
             else{
                 errorSight.setSightName("Zone not found: " + zone);
-                return ResponseEntity.badRequest().body(new Sight[] { errorSight });
+                return ResponseEntity.notFound().build();
             }
         }
         catch (IOException e) {

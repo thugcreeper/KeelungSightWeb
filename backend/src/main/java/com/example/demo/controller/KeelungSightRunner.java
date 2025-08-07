@@ -1,7 +1,5 @@
 package com.example.demo.controller;
 
-import com.example.demo.service.deleteSights;
-import com.example.demo.service.findAllSight;
 import com.example.demo.model.Sight;
 import com.example.demo.repository.SightRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,34 +16,39 @@ import java.util.Arrays;
 public class KeelungSightRunner implements ApplicationRunner {
     private final String[] districts= {"七堵","中山","中正","仁愛","安樂","信義","暖暖"};
     @Autowired
-    private SightRepository KeelungSightRepo;
+    private SightRepository keelungSightRepo;
 
-    ArrayList<Sight[]> sights = new ArrayList<Sight[]>();
-
+    private final int retryTime=3;
     @Override
     public void run(ApplicationArguments args) throws Exception {
+
         System.out.println("Call KeelungSight crawler");
         KeelungSightsCrawler crawler = new KeelungSightsCrawler();
-        findAllSight finder = new findAllSight(KeelungSightRepo);
-        deleteSights deleter = new deleteSights(KeelungSightRepo);
-        int totalLength=0;
+        //findAllSight finder = new findAllSight(KeelungSightRepo);
+        //deleteSights deleter = new deleteSights(KeelungSightRepo);
+        //int totalLength=0;
 
         for(int i=0;i<districts.length;i++){//測試完記得改成districts.length
-            try{
-                Sight[] sights = crawler.getItems(districts[i]);
-                //saveAll要接iterable的entity作為參數，因此要Array.asList
-                KeelungSightRepo.saveAll(Arrays.asList(sights));
-                //sights.add(crawler.getItems(districts[i]));
-                System.out.println(districts[i]+"區 Saved successfully :)");
+            for(int currentTime=0;currentTime<retryTime;currentTime++){
+                try{
+                    Sight[] sights = crawler.getItems(districts[i]);
+                    //saveAll要接iterable的entity作為參數，因此要Array.asList
+                    keelungSightRepo.saveAll(Arrays.asList(sights));
+                    //sights.add(crawler.getItems(districts[i]));
+                    System.out.println(districts[i]+"區 Saved successfully :)");
+                    break;
+                }
+                catch (Exception e) {
+                    if(currentTime<retryTime-1){
+                        System.err.println("failed " + (currentTime+1) + " time at "+districts[i] +"區,trying fetch sights again");
+                    }
+                    else{
+                        System.err.println("failed " + retryTime+ " time,stop fetching again");
+                    }
+
+                }
             }
-            catch (Exception e) {
-                System.err.println("Error! reason:"+e.getMessage());
-            }
-        }
-        for (Sight[] districtSights : sights) {
-            for(Sight s : districtSights){
-                System.out.println(s);
-            }
+
         }
 
         /*Testing
