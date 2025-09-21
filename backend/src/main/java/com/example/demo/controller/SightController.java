@@ -48,6 +48,9 @@ public class SightController{
     //@RequestParam is used to extract data from the query parameters of a request URL
     //?zone="七堵" 會擷取七堵
     public ResponseEntity<Sight[]> getItems(@RequestParam(required = false) String zone) {
+        if(zone.contains("區")){//輸入包含"區"也能夠輸出json
+            zone=zone.replace("區","");
+        }
         SightService newCrawler =new SightService(sightRepository);
         Sight errorSight = new Sight();
         try{

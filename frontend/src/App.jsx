@@ -1,13 +1,29 @@
 import { useState } from 'react'
 import fetchSightData from './fetchSightJson.jsx'
+import ReactModal from 'react-modal';
+import { OrbitProgress } from 'react-loading-indicators';
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 //cd C:\Users\User\Desktop\Q3RWDPractice
 //npm run dev
 //enter http://localhost:5173/
+ReactModal.setAppElement('#root'); 
+
 function App() {
   const [data, setData] = useState([])
+  const [show, setShow] = useState(false);
+
+   const handleShow = (sight) => {// 開啟 modal 並設定選中的景點
+    setSelectedSight(sight)
+    setShow(true)
+  }
+
+  const handleClose = () => {
+    setShow(false)
+    setSelectedSight(null)
+  }
+  const [selectedSight, setSelectedSight] = useState(null) // 存放目前選到的景點
   const handleFetch = async (district) => {
     const result = await fetchSightData(district);
     if (result) {
@@ -32,15 +48,17 @@ function App() {
         <h1 className="max-sm:text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-red-500 my-5 mb-20 font-serif ">基隆市景點瀏覽器</h1>
       </a>
       <div className="flex flex-wrap gap-x-4 gap-y-2 justify-center">
-        <button onClick={() => handleFetch('中山')} >中山區</button>
-          <button onClick={() => handleFetch('信義')} >信義區</button>
-          <button onClick={() => handleFetch('仁愛')} >仁愛區</button>
-          <button onClick={() => handleFetch('中正')} >中正區</button>
-          <button onClick={() => handleFetch('安樂')} >安樂區</button>
-          <button onClick={() => handleFetch('七堵')} >七堵區</button>
-          <button onClick={() => handleFetch('暖暖')} >暖暖區</button>
+        <button onClick={() => handleFetch('中山') }>中山區</button>
+        <button onClick={() => handleFetch('信義') }>信義區</button>
+        <button onClick={() => handleFetch('仁愛') }>仁愛區</button>
+        <button onClick={() => handleFetch('中正') }>中正區</button>
+        <button onClick={() => handleFetch('安樂') }>安樂區</button>
+        <button onClick={() => handleFetch('七堵') }>七堵區</button>
+        <button onClick={() => handleFetch('暖暖')} >暖暖區</button>
       </div>
+
       <div id="searchingHint" className='hidden text-center text-2xl font-bold text-blue-800 mt-10'>
+        <OrbitProgress variant="track-disc" color="#3cd0e7ff" size="medium" text="" textColor="" /><br/>
         搜尋中...
       </div>
       {/* Display fetched sights here */}
@@ -59,27 +77,47 @@ function App() {
               <p className="max-sm:text-lg sm:text-xl md:text-2xl font-semibold text-pink-700">
                 <button id="addrButton" onClick={() => window.open(`${item.mapURL}`, '_blank')}>地址</button>
                 <p>{item.address}</p>
+                {/* 打開 modal，傳入 item */}
+                <button
+                  onClick={() => handleShow(item)}
+                  id='moreInfobtn'
+                >
+                  詳細資訊
+                </button>
               </p>
-              <button
-                id={`moreInfobtn-${index}`}
-                /* ` is used for template string and you can interpolate variables or expression*/ 
-                onClick={() => document.getElementById(`moreInfo-${index}`).classList.toggle('collapse')}
-                className="moreInfobtn max-sm:text-sm sm:text-base md:text-lg"
-              >
-                詳細資訊
-              </button>
-              <div className="collapse" id={`moreInfo-${index}`}>
-                <img
-                  src={item.photoURL}
-                  alt={item.sightName}
-                  className="w-full h-auto object-cover rounded-xl border-blue-400 border-solid border-5"
-                />
-                <p className="max-sm:text-sm sm:text-base md:text-lg font-semibold text-black mt-2">介紹: {item.description}</p>
-              </div>
+              
             </div>
           </div>
         ))}
       </div>
+      <ReactModal
+          isOpen={show}
+          onRequestClose={handleClose}
+          contentLabel="景點詳細資訊"
+          /*overlayclass用於設定背景的css*/
+          overlayClassName="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 transition-opacity duration-300"
+          className="bg-white rounded-2xl shadow-lg p-6 max-w-lg w-auto max-h-[100vh] h-auto mx-4 transform transition-all duration-300 flex flex-col"
+        >
+          {selectedSight && (
+            <div className="flex flex-col h-full">
+              <h2 className="text-xl font-bold mb-4 text-blue-800">
+                {selectedSight.sightName}
+              </h2>
+              <div className="flex-shrink-0 mb-4">
+                <img
+                  src={selectedSight.photoURL}
+                  alt={selectedSight.sightName}
+                  className="w-full max-h-60  rounded-xl border-blue-400 border-2"
+                />
+              </div>
+              <div className="flex-1 overflow-y-auto">{/* 允許內容滾動 */}
+                <p className="text-base font-semibold text-black mt-2 ">
+                  介紹: {selectedSight.description}
+                </p>
+              </div>
+            </div>
+          )}
+        </ReactModal>
     </div>
   )
 }
